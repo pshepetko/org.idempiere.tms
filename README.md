@@ -1,4 +1,4 @@
-org.maximea.tms
+org.idempiere.tms
 =============
 
 Description
@@ -8,19 +8,19 @@ Transport Management plugin for  iDempiere Business Suite ERP/CRM/SCM
 
 Features
 --------
-- Repository: https://bitbucket.org/pshepetko/org.maximea.tms
+- Repository: https://bitbucket.org/pshepetko/org.idempiere.tms
 - License: GPL 2
 - Version: 1.0.1a
 
 
 Contributors
 ------------
-- 2019 Maximea.PL <maximea@maximea.pl>.
+- 2019 PShepetko <pshepetko@gmail.com>.
 
 
 Instructions
 ------------
-- 1)download the TMS plugin from https://bitbucket.org/pshepetko/org.maximea.tms/downloads/
+- 1)download the TMS plugin from https://github.com/pshepetko/org.idempiere.tms
 - 2) In Apache Felix Web Console: 
 - 2.1) Install plugin 
 - 2.2) Select file 
@@ -29,4 +29,4 @@ Instructions
 
 Documentation
 -------------
-- User Guide {https://bitbucket.org/pshepetko/org.maximea.tms/downloads/UserGuide_TMS_v1.0.1a.pdf}
+- User Guide {https://github.com/pshepetko/org.idempiere.tms/UserGuide_TMS_v1.0.1a.pdf}
