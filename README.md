@@ -8,7 +8,7 @@ Transport Management plugin for  iDempiere Business Suite ERP/CRM/SCM
 
 Features
 --------
-- Repository: https://bitbucket.org/pshepetko/org.idempiere.tms
+- Repository: https://github.com/pshepetko/org.idempiere.tms
 - License: GPL 2
 - Version: 1.0.1a
 
