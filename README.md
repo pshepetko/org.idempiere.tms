@@ -20,7 +20,7 @@ Contributors
 
 Instructions
 ------------
-- 1)download the TMS plugin from https://github.com/pshepetko/org.idempiere.tms
+- 1)download the TMS plugin from https://github.com/pshepetko/org.idempiere.tms/blob/master/download/
 - 2) In Apache Felix Web Console: 
 - 2.1) Install plugin 
 - 2.2) Select file 
@@ -29,4 +29,4 @@ Instructions
 
 Documentation
 -------------
-- User Guide {https://github.com/pshepetko/org.idempiere.tms/UserGuide_TMS_v1.0.1a.pdf}
+- User Guide https://github.com/pshepetko/org.idempiere.tms/blob/master/download/UserGuide_TMS_v1.0.2a.pdf
