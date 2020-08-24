@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.maximea.tms.component.TMSDocFactory">
-   <implementation class="org.maximea.tms.component.TMSDocFactory"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.idempiere.tms.component.TMSDocFactory">
+   <implementation class="org.idempiere.tms.component.TMSDocFactory"/>
    <property name="gaap" type="String" value="*"/>
    <property name="service.ranking" type="Integer" value="100"/>
    <service>

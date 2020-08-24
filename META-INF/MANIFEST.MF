@@ -4,7 +4,8 @@ Bundle-Name: TMS plugin
 Bundle-SymbolicName: org.idempiere.tms;singleton:=true
 Bundle-Version: 7.1.0.qualifier
 Bundle-ClassPath: .,
- lib/directions-api-client-0.10.0.jar
+ lib/axis.jar,
+ lib/directions-api-client.jar
 Bundle-Activator: org.adempiere.plugin.utils.Incremental2PackActivator
 Export-Package: org.eevolution.fms.process,
  org.idempiere.acct,

@@ -21,6 +21,7 @@
 package org.idempiere.tms.component;
 
 import org.idempiere.tms.base.CustomFormFactory;
+import org.idempiere.tms.form.TracCarForm;
 
 /**
  * Form Factory
@@ -38,7 +39,7 @@ public class TMSFormFactory extends CustomFormFactory {
 	 */
 	@Override
 	protected void initialize() {
-//	 	registerForm(org.maximea.tms.form.testForm.class);
+
 	}
 
 }

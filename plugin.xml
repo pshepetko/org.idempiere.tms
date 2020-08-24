@@ -9,5 +9,13 @@
             class="org.idempiere.tms.form.MapViewForm">
       </form>
    </extension>
+   <extension
+         id="org.idempiere.tms.form.TracCarForm"
+         name="TracCarForm"
+         point="org.adempiere.webui.Form">
+      <form
+            class="org.idempiere.tms.form.TracCarForm">
+      </form>
+   </extension>
 
 </plugin>
