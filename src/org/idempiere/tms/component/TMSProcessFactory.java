@@ -45,6 +45,7 @@ public class TMSProcessFactory extends CustomProcessFactory {
   		registerProcess(org.idempiere.tms.process.createRFQ.class);
   		registerProcess(org.idempiere.tms.process.VehicleAssignment.class);
   		registerProcess(org.idempiere.tms.process.FreightCostCalculation.class);
+  		registerProcess(org.idempiere.tms.process.CreateMaintenancePlan.class);
 	}
 
 }

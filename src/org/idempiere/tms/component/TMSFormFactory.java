@@ -21,7 +21,6 @@
 package org.idempiere.tms.component;
 
 import org.idempiere.tms.base.CustomFormFactory;
-import org.idempiere.tms.form.TracCarForm;
 
 /**
  * Form Factory
