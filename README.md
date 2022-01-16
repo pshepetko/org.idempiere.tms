@@ -15,7 +15,7 @@ Features
 
 Contributors
 ------------
-- 2019- 2022PShepetko <pshepetko@gmail.com>.
+- 2019-2022 PShepetko <pshepetko@gmail.com>.
 
 
 Instructions
