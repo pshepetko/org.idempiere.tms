@@ -9,5 +9,21 @@
             class="org.idempiere.tms.form.MapViewForm">
       </form>
    </extension>
+   <extension
+         id="org.idempiere.tms.form.OSMRouteViewForm"
+         name="OSMRouteViewForm"
+         point="org.adempiere.webui.Form">
+      <form
+            class="org.idempiere.tms.form.OSMRouteViewForm">
+      </form>
+   </extension>
+   <extension
+         id="org.idempiere.tms.form.OSMTrackViewForm"
+         name="OSMTrackViewForm"
+         point="org.adempiere.webui.Form">
+      <form
+            class="org.idempiere.tms.form.OSMTrackViewForm">
+      </form>
+   </extension>
 
 </plugin>

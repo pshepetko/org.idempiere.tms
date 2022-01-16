@@ -58,13 +58,25 @@ public class TMSModelFactory extends CustomModelFactory {
 		registerTableModel(org.idempiere.tms.model.MDDVehicleAssignment.Table_Name, org.idempiere.tms.model.MDDVehicleAssignment.class);
 		registerTableModel(org.idempiere.tms.model.MDDVehicleType.Table_Name, org.idempiere.tms.model.MDDVehicleType.class);
 
-		registerTableModel(org.idempiere.tms.model.MDDOTR.Table_Name, org.idempiere.tms.model.MDDOTR.class);	
 		registerTableModel(org.idempiere.tms.model.MDDFreightStop.Table_Name, org.idempiere.tms.model.MDDFreightStop.class);
 		registerTableModel(org.idempiere.tms.model.MDDFreightCost.Table_Name, org.idempiere.tms.model.MDDFreightCost.class);
 		
 		registerTableModel(org.idempiere.tms.model.MDDCalculationMethod.Table_Name, org.idempiere.tms.model.MDDCalculationMethod.class);
 		registerTableModel(org.idempiere.tms.model.MDDCalculationMethodLine.Table_Name, org.idempiere.tms.model.MDDCalculationMethodLine.class);
 		registerTableModel(org.idempiere.tms.model.MDDFreightAgreement.Table_Name, org.idempiere.tms.model.MDDFreightAgreement.class);
+		
+		registerTableModel(org.idempiere.tms.model.MDDOTR.Table_Name, org.idempiere.tms.model.MDDOTR.class);	
+		registerTableModel(org.idempiere.tms.model.MDDOtrLine.Table_Name, org.idempiere.tms.model.MDDOtrLine.class);
+
+		registerTableModel(org.idempiere.tms.model.MDDRoute.Table_Name, org.idempiere.tms.model.MDDRoute.class);
+		registerTableModel(org.idempiere.tms.model.MDDRouteLine.Table_Name, org.idempiere.tms.model.MDDRouteLine.class); 
+		registerTableModel(org.idempiere.tms.model.MDDRouteLine_BP.Table_Name, org.idempiere.tms.model.MDDRouteLine_BP.class); 
+		registerTableModel(org.idempiere.tms.model.MDDRouteLine_Coordinates.Table_Name, org.idempiere.tms.model.MDDRouteLine_Coordinates.class); 
+		registerTableModel(org.idempiere.tms.model.MDDRouteLine_Location.Table_Name, org.idempiere.tms.model.MDDRouteLine_Location.class); 
+		registerTableModel(org.idempiere.tms.model.MDDRouteLine_SR.Table_Name, org.idempiere.tms.model.MDDRouteLine_SR.class);
+
+		registerTableModel(org.idempiere.tms.model.MDDGPSDevice.Table_Name, org.idempiere.tms.model.MDDGPSDevice.class);
+		registerTableModel(org.idempiere.tms.model.MDDGPSPosition.Table_Name, org.idempiere.tms.model.MDDGPSPosition.class);
 	}
 
 }

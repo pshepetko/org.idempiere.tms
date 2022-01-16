@@ -38,14 +38,14 @@ public class TMSProcessFactory extends CustomProcessFactory {
 	 */
 	@Override
 	protected void initialize() {
-  		registerProcess(org.idempiere.tms.process.createInvoiceFromFO.class);
   		registerProcess(org.idempiere.tms.process.createOTR.class);
   		registerProcess(org.idempiere.tms.process.createFreightUnit.class);
   		registerProcess(org.idempiere.tms.process.createFreightOrder.class);
   		registerProcess(org.idempiere.tms.process.createRFQ.class);
   		registerProcess(org.idempiere.tms.process.VehicleAssignment.class);
   		registerProcess(org.idempiere.tms.process.FreightCostCalculation.class);
-  		registerProcess(org.idempiere.tms.process.CreateMaintenancePlan.class);
+  		
+  		registerProcess(org.idempiere.tms.process.createSO.class);
 	}
 
 }

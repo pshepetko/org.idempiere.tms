@@ -60,11 +60,8 @@ public class createRFQ extends CustomProcess  {
 	
 	@Override
 	protected String doIt() throws Exception {
-		int count=1;
 		String tu_last="";
 		String result="Created RFQs: ";
-
-		MRfQTopic rfqtopic =new MRfQTopic(getCtx(), p_C_RfQ_Topic_ID, get_TrxName());
 		
 		String sql = "SELECT DISTINCT ON(otr.DatePromised,otr.M_Warehouse_ID,otr.tu) "
 				+ " otr.DatePromised," //1

@@ -47,7 +47,7 @@ public class MapViewForm  implements IFormController,EventListener {
 	private Button bRefresh = new Button();
 	private Button bCreate = new Button();
 	private Button bgmapURL = new Button();
-	private Label lversion = new Label(" [v1.03]");
+	private Label lversion = new Label(" [v1.04]");
 
  	private int height_map =0;
  	
@@ -81,17 +81,17 @@ public class MapViewForm  implements IFormController,EventListener {
 			bRefresh.addActionListener(this);
 			form.appendChild(bRefresh);
  			
-			bCreate.setLabel(Msg.translate(Env.getCtx(), "Show Route"));
+			bCreate.setLabel(Msg.translate(Env.getCtx(), "Show Route [GraphHopper]"));
 			bCreate.addActionListener(this);
 			form.appendChild(bCreate);
 			
-			bgmapURL.setLabel(Msg.translate(Env.getCtx(), "Show Route[gmap]"));
+			bgmapURL.setLabel(Msg.translate(Env.getCtx(), "Show Route[Google Map]"));
 			bgmapURL.addActionListener(this);
 			form.appendChild(bgmapURL);
  								
 			form.appendChild(lversion);
 			
-			form.appendChild(iframe); 
+ 			form.appendChild(iframe); 
 		}
 		catch(Exception e)
 		{
@@ -148,11 +148,11 @@ public class MapViewForm  implements IFormController,EventListener {
 	{
 		if (e.getTarget().equals(bCreate)) 
 		{
-			iframe.setSrc(null);
+/*			iframe.setSrc(null);
 			if (fieldFO.getSelectedIndex()!=0)
 				{
 	 			KeyNamePair key_fo = (KeyNamePair) fieldFO.getSelectedItem().getValue();
- 				createhtmlfile(key_fo.getKey());
+ 				//createhtmlfile(key_fo.getKey());
 				
 				MimetypesFileTypeMap mimeMap = new MimetypesFileTypeMap();
 	            AMedia media = new AMedia(file_tmp, mimeMap.getContentType(file_tmp), "UTF-8");
@@ -160,7 +160,18 @@ public class MapViewForm  implements IFormController,EventListener {
 				iframe.setContent(media);
 				iframe.invalidate();	
 				}		
- 		}
+*/
+		    KeyNamePair key_fo = (KeyNamePair) fieldFO.getSelectedItem().getValue();
+			String urlString = createGHmapURL(key_fo.getKey());
+			String message = null;
+			try {
+				Executions.getCurrent().sendRedirect(urlString, "_blank");
+			}
+			catch (Exception e1) {
+				message = e1.getMessage();
+				FDialog.warn(0, "URLnotValid", message.toString());
+			}	
+		}
 		
 		if (e.getTarget().equals(bRefresh)) 
 		{			
@@ -185,10 +196,10 @@ public class MapViewForm  implements IFormController,EventListener {
 	}   //  onEvent
 	
 	
-	private void createhtmlfile(int tboxFO_ID) throws IOException {
+	private String createhtmlfile(int tboxFO_ID) throws IOException {
 		String points_str="";
 		String sql = "";
-		
+/*		
 		//tmpfile
 		file_tmp = File.createTempFile("ghmapview", ".html");
 				
@@ -207,7 +218,7 @@ public class MapViewForm  implements IFormController,EventListener {
 		out.write("	width='90%' ");
 		out.write("	height='"+(height_map+50) + "px"+"' ");
 		out.write("	frameborder='0' style='border:0' ");
-		
+*/		
 		// create URL string
 		points_str+="src='https://graphhopper.com/maps/?";
    			sql =   "(SELECT DISTINCT ON (fos.C_LocFrom_ID) fos.C_LocFrom_ID " + 
@@ -249,13 +260,15 @@ public class MapViewForm  implements IFormController,EventListener {
     
 		points_str+= "&locale="+Locale;
 		points_str+= "&vehicle=small_truck&weighting=fastest&elevation=true&use_miles=false&layer=Omniscale'";
-		out.write(points_str);
+/*		out.write(points_str);
 
 		out.write("	</iframe> ");
 		out.write("	</body> ");
 		out.write("	</html> ");			
 
    		out.close(); osw.close(); fis_tmp.close(); out=null;osw=null;fis_tmp=null;
+   	*/	
+		return points_str;
 	}//end createhtmlfile	
 	
 	
@@ -298,15 +311,16 @@ public class MapViewForm  implements IFormController,EventListener {
      // create URL string
 		 String url_str="https://www.google.com/maps/dir/";
 		 
-		 String sql =   "(SELECT DISTINCT ON (fos.C_LocFrom_ID) fos.C_LocFrom_ID " + 
+		 String sql =   "(SELECT DISTINCT ON (fos.C_LocFrom_ID) fos.C_LocFrom_ID, fos.Sequence " + 
 				" FROM DD_Freight_Stop fos  " + 
 				" LEFT JOIN C_Location l ON l.C_Location_ID=fos.C_LocFrom_ID   " + 
-				" WHERE fos.C_BPartner_ID IS NOT NULL AND fos.DD_Freight_ID="+tboxFO_ID+" ORDER BY fos.C_LocFrom_ID) " + 
+				" WHERE fos.C_BPartner_ID IS NOT NULL AND fos.DD_Freight_ID="+tboxFO_ID+" ORDER BY fos.C_LocFrom_ID,fos.Sequence ) " + 
 				" UNION ALL " + 
-				" (SELECT DISTINCT ON (fos.C_LocTo_ID) fos.C_LocTo_ID " + 
+				" (SELECT * FROM (SELECT DISTINCT ON (fos.C_LocTo_ID) fos.C_LocTo_ID, fos.Sequence " + 
 				" FROM DD_Freight_Stop fos   " + 
 				" LEFT JOIN C_Location l ON l.C_Location_ID=fos.C_LocTo_ID   " + 
-				" WHERE fos.C_LocTo_ID IS  NOT NULL AND fos.DD_Freight_ID="+tboxFO_ID +" ORDER BY fos.C_LocTo_ID);";		
+				" WHERE fos.C_LocTo_ID IS  NOT NULL AND fos.DD_Freight_ID="+tboxFO_ID +
+				" ORDER BY fos.C_LocTo_ID,fos.Sequence) fos2 ORDER BY fos2.Sequence);";		
  	        PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try
@@ -333,5 +347,53 @@ public class MapViewForm  implements IFormController,EventListener {
    			}
 			return url_str;
 	 }
+	 
+		private String createGHmapURL(int tboxFO_ID) throws IOException {
+			String points_str="";
+	
+			// create URL string
+			points_str+="https://graphhopper.com/maps/?";
+
+			String sql ="(SELECT DISTINCT ON (fos.C_LocFrom_ID) fos.C_LocFrom_ID, fos.Sequence " + 
+						" FROM DD_Freight_Stop fos  " + 
+						" LEFT JOIN C_Location l ON l.C_Location_ID=fos.C_LocFrom_ID   " + 
+						" WHERE fos.C_BPartner_ID IS NOT NULL AND fos.DD_Freight_ID="+tboxFO_ID+" ORDER BY fos.C_LocFrom_ID,fos.Sequence ) " + 
+						" UNION ALL " + 
+						" (SELECT * FROM (SELECT DISTINCT ON (fos.C_LocTo_ID) fos.C_LocTo_ID, fos.Sequence " + 
+						" FROM DD_Freight_Stop fos   " + 
+						" LEFT JOIN C_Location l ON l.C_Location_ID=fos.C_LocTo_ID   " + 
+						" WHERE fos.C_LocTo_ID IS  NOT NULL AND fos.DD_Freight_ID="+tboxFO_ID +
+						" ORDER BY fos.C_LocTo_ID,fos.Sequence) fos2 ORDER BY fos2.Sequence);";		
+			 
+			PreparedStatement pstmt = null;
+	   			ResultSet rs = null;
+	   			try
+		   			{
+		   			pstmt = DB.prepareStatement(sql, null);
+		   			rs = pstmt.executeQuery();
+		   			while (rs.next())
+			   			{ 
+			   				if (rs.getInt(1)>0)
+			   				{
+			   					MLocation m_loc = new MLocation(Env.getCtx(),rs.getInt(1),null);
+			   					points_str+="&point="+m_loc.getMapsLocation();
+				   			}
+			   			}
+		   			}
+	   			catch (SQLException e)
+		   			{
+		   			//log.log(Level.SEVERE, sql, e);
+		   			}
+	   			finally
+		   			{
+			   			DB.close(rs, pstmt);
+			   			rs = null; pstmt = null;
+		   			}   			
+	    
+			points_str+= "&locale="+Locale;
+			points_str+= "&vehicle=small_truck&weighting=fastest&elevation=true&use_miles=false&layer=Omniscale'";
+
+			return points_str;
+		}//end createGHUrl	
 	
 }

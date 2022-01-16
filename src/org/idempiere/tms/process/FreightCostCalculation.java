@@ -24,7 +24,6 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -46,7 +45,6 @@ import org.idempiere.tms.model.MDDFreightCost;
 public class FreightCostCalculation extends CustomProcess  {
 
 	private String		processVerNo = "[v.1.01] ";
-	private int 		p_C_BP_Group_ID=0;
 	private int 		fc_count=0;	
 	private int 		fc_count_err=0;
 	
@@ -78,9 +76,9 @@ public class FreightCostCalculation extends CustomProcess  {
 			}
 			
 			if (p_DateFrom!=null && p_DateTo!=null) 
-				whereClause =" otr.AD_Client_ID="+p_AD_Client_ID+" AND CAST(otr.DatePromised AS date) BETWEEN CAST('"+p_DateFrom+"' AS date) AND CAST('"+p_DateTo+"' AS date) ";
+				whereClause ="  AD_Client_ID="+p_AD_Client_ID+" AND CAST(DatePromised AS date) BETWEEN CAST('"+p_DateFrom+"' AS date) AND CAST('"+p_DateTo+"' AS date) ";
 			else 
-				whereClause =" otr.AD_Client_ID="+p_AD_Client_ID+" AND EXISTS (SELECT T_Selection_ID FROM T_Selection WHERE T_Selection.AD_PInstance_ID= " +getAD_PInstance_ID()+ " AND T_Selection.T_Selection_ID=otr.DD_OTR_ID) ";
+				whereClause =" AD_Client_ID="+p_AD_Client_ID+" AND EXISTS (SELECT T_Selection_ID FROM T_Selection WHERE T_Selection.AD_PInstance_ID= " +getAD_PInstance_ID()+ " AND T_Selection.T_Selection_ID= DD_Freight_ID) ";
 
 	}
 	
@@ -89,15 +87,10 @@ public class FreightCostCalculation extends CustomProcess  {
 
 		String result_msg="Freight Cost Calculation:";
 		String warning_msg="";
-		BigDecimal FreightAmt = Env.ZERO;;	
-		
-		String sql = "SELECT DISTINCT ON(otr.DatePromised,otr.M_Warehouse_ID,fol.DD_Freight_ID) "
-				+ " otr.DD_OTR_ID, "//1
-				+ " fol.DD_Freight_ID "//2
-				+ " FROM DD_OTR otr "
-				+ " LEFT JOIN DD_FreightLine fol ON fol.DD_FreightLine_ID=otr.DD_FreightLine_ID "
-				+ " WHERE " +whereClause
-				+ " AND otr.DD_FreightLine_ID IS NOT NULL;";
+		BigDecimal FreightAmt = Env.ZERO;
+		BigDecimal FreightQty = Env.ZERO;
+				
+		String sql = "SELECT DD_Freight_ID FROM DD_Freight WHERE "+whereClause +";";
 
  		PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -107,7 +100,7 @@ public class FreightCostCalculation extends CustomProcess  {
 				rs = pstmt.executeQuery ();
 				while(rs.next ())
 				{										
-							MDDFreight FOrder =new MDDFreight(getCtx(), rs.getInt(2), get_TrxName());	
+							MDDFreight FOrder =new MDDFreight(getCtx(), rs.getInt(1), get_TrxName());	
 							if (FOrder.getM_Shipper_ID()>0)
 							{
 								//delete old cost
@@ -133,70 +126,60 @@ public class FreightCostCalculation extends CustomProcess  {
 						 						//based Length of Route
 						 						if (cml.getC_UOM().getUOMType().equals("LE")) //UOMType=Length
 						 						{
-						 							FOrderCost.setQty(FOrder.getLength());
-						 							FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
-						 							FOrderCost.setAmt((FOrder.getLength()
-						 									.divide(cml.getQty()))
-						 									.multiply(cml.getRate()
-						 									.multiply(cm.getC_Charge().getChargeAmt())));
-							 					 	FOrderCost.setDescription(cm.getName());
+						 							FreightQty = FOrder.getLength();
+
 						 						}
 						 						//based Weight
 						 						else if (cml.getC_UOM().getUOMType().equals("WE")) //UOMType=Weight
 						 						{
-						 							FOrderCost.setQty(FOrder.getWeight());
-						 							FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
-						 							FOrderCost.setAmt((FOrder.getWeight()
-						 									.divide(cml.getQty()))
-						 									.multiply(cml.getRate()
-						 									.multiply(cm.getC_Charge().getChargeAmt())));
-							 					 	FOrderCost.setDescription(cm.getName());
+						 							FreightQty = FOrder.getWeight();
 						 						}
 						 						//based Duration
 						 						else if (cml.getC_UOM().getUOMType().equals("TM")) //UOMType=Time
 						 						{
-						 							FOrderCost.setQty(new BigDecimal(FOrder.getDuration()));
-						 							FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
-						 							FOrderCost.setAmt((new BigDecimal(FOrder.getDuration())
-						 									.divide(cml.getQty()))
-						 									.multiply(cml.getRate()
-						 									.multiply(cm.getC_Charge().getChargeAmt())));
-							 					 	FOrderCost.setDescription(cm.getName());
-							 					 	FOrderCost.setDescription(cm.getName());
+						 							FreightQty = new BigDecimal(FOrder.getDuration());
 						 						}
 						 						//based Stops
 						 						else if (cml.getC_UOM().getUOMType().equals("QA")) //UOMType=Quantity
 						 						{
-						 							FOrderCost.setQty(FOrder.getStops());
-						 							FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
-						 							FOrderCost.setAmt((FOrder.getStops()
-						 									.divide(cml.getQty()))
-						 									.multiply(cml.getRate()
-						 									.multiply(cm.getC_Charge().getChargeAmt())));
-							 					 	FOrderCost.setDescription(cm.getName());
-							 					 	FOrderCost.setDescription(cm.getName());
+						 							FreightQty = FOrder.getStops();
 						 						}
 						 						//based Volume
 						 						else if (cml.getC_UOM().getUOMType().equals("VD") || cml.getC_UOM().getUOMType().equals("VL")) //UOMType=Volume Dry or Volume Liquid
 
 						 						{
-						 							FOrderCost.setQty(FOrder.getVolume());
-						 							FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
-						 							FOrderCost.setAmt((FOrder.getVolume()
+						 							FreightQty = FOrder.getVolume();	
+						 						}
+						 						else
+						 						{
+						 							FreightQty = Env.ZERO;
+							 					 	log.warning("Error because not exist UOMType for UOM="+cml.getC_UOM().getName()+" for "+cm.getName());
+						 						}		
+						 						
+						 						if (FreightQty.compareTo(Env.ZERO) >= 1)
+						 						{
+							 						//FOrderCost.setQty(FreightQty);
+						 							//FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
+						 							FOrderCost.setAmt((FreightQty
 						 									.divide(cml.getQty()))
 						 									.multiply(cml.getRate()
 						 									.multiply(cm.getC_Charge().getChargeAmt())));
 							 					 	FOrderCost.setDescription(cm.getName());
+							 					 	
+							 					 	if (cm.getC_Charge().getChargeAmt().compareTo(Env.ONE)==0)
+							 					 	{
+							 					 		FOrderCost.setQty(FreightQty);
+							 					 		FOrderCost.setPrice(cml.getRate().divide(cml.getQty()).multiply(cm.getC_Charge().getChargeAmt()));
+							 					 	} else
+							 					 	{	
+							 					 		FOrderCost.setQty(FOrderCost.getAmt().divide(cm.getC_Charge().getChargeAmt()));
+							 					 		FOrderCost.setPrice(cm.getC_Charge().getChargeAmt());
+							 					 	}
+							 					 	
+							 						FOrderCost.saveEx();
+							 						FreightAmt=FreightAmt.add(FOrderCost.getAmt());
+							 						FreightQty=Env.ZERO;
 						 						}
-						 						else
-						 						{
-						 							FOrderCost.setQty(Env.ONE);
-						 							FOrderCost.setPrice(cml.getRate());
-						 							FOrderCost.setAmt(cml.getRate().multiply(Env.ONE).multiply(cm.getC_Charge().getChargeAmt()));
-							 					 	FOrderCost.setDescription("Error because not exist UOMType for UOM="+cml.getC_UOM().getName()+" for "+cm.getName());
-						 						}					 						
-						 						FOrderCost.saveEx();
-						 						FreightAmt=FreightAmt.add(FOrderCost.getAmt());
 										}
 
 								}

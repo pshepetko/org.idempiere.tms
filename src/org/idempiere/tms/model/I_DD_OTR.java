@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for DD_OTR
  *  @author iDempiere (generated) 
- *  @version Release 5.1
+ *  @version Release 8.2
  */
 @SuppressWarnings("all")
 public interface I_DD_OTR 
@@ -32,7 +32,7 @@ public interface I_DD_OTR
     /** TableName=DD_OTR */
     public static final String Table_Name = "DD_OTR";
 
-    /** AD_Table_ID=1000235 */
+    /** AD_Table_ID=1000000 */
     public static final int Table_ID = MTable.getTable_ID(Table_Name);
 
     KeyNamePair Model = new KeyNamePair(Table_ID, Table_Name);
@@ -214,23 +214,23 @@ public interface I_DD_OTR
 
 	public org.eevolution.model.I_DD_OrderLine getDD_OrderLine() throws RuntimeException;
 
-    /** Column name dd_otr_ID */
-    public static final String COLUMNNAME_dd_otr_ID = "dd_otr_ID";
+    /** Column name DD_OTR_ID */
+    public static final String COLUMNNAME_DD_OTR_ID = "DD_OTR_ID";
 
 	/** Set Order Transportation Requirement	  */
-	public void setdd_otr_ID (int dd_otr_ID);
+	public void setDD_OTR_ID (int DD_OTR_ID);
 
 	/** Get Order Transportation Requirement	  */
-	public int getdd_otr_ID();
+	public int getDD_OTR_ID();
 
-    /** Column name dd_otr_uuid */
-    public static final String COLUMNNAME_dd_otr_uuid = "dd_otr_uuid";
+    /** Column name DD_OTR_UUID */
+    public static final String COLUMNNAME_DD_OTR_UUID = "DD_OTR_UUID";
 
 	/** Set dd_otr_uuid	  */
-	public void setdd_otr_uuid (String dd_otr_uuid);
+	public void setDD_OTR_UUID (String DD_OTR_UUID);
 
 	/** Get dd_otr_uuid	  */
-	public String getdd_otr_uuid();
+	public String getDD_OTR_UUID();
 
     /** Column name DD_TransportUnit_ID */
     public static final String COLUMNNAME_DD_TransportUnit_ID = "DD_TransportUnit_ID";
@@ -292,6 +292,36 @@ public interface I_DD_OTR
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name M_InOutLine_ID */
+    public static final String COLUMNNAME_M_InOutLine_ID = "M_InOutLine_ID";
+
+	/** Set Shipment/Receipt Line.
+	  * Line on Shipment or Receipt document
+	  */
+	public void setM_InOutLine_ID (int M_InOutLine_ID);
+
+	/** Get Shipment/Receipt Line.
+	  * Line on Shipment or Receipt document
+	  */
+	public int getM_InOutLine_ID();
+
+	public org.compiere.model.I_M_InOutLine getM_InOutLine() throws RuntimeException;
+
+    /** Column name M_MovementLine_ID */
+    public static final String COLUMNNAME_M_MovementLine_ID = "M_MovementLine_ID";
+
+	/** Set Move Line.
+	  * Inventory Move document Line
+	  */
+	public void setM_MovementLine_ID (int M_MovementLine_ID);
+
+	/** Get Move Line.
+	  * Inventory Move document Line
+	  */
+	public int getM_MovementLine_ID();
+
+	public org.compiere.model.I_M_MovementLine getM_MovementLine() throws RuntimeException;
 
     /** Column name M_Product_ID */
     public static final String COLUMNNAME_M_Product_ID = "M_Product_ID";

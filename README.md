@@ -10,12 +10,12 @@ Features
 --------
 - Repository: https://github.com/pshepetko/org.idempiere.tms
 - License: GPL 2
-- Version: 1.0.1a
+- Version: 2.0.1 Beta
 
 
 Contributors
 ------------
-- 2019 PShepetko <pshepetko@gmail.com>.
+- 2019-2022 PShepetko <pshepetko@gmail.com>.
 
 
 Instructions

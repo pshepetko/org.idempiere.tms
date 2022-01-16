@@ -26,14 +26,14 @@ import org.compiere.util.Env;
 
 /** Generated Model for DD_OTR
  *  @author iDempiere (generated) 
- *  @version Release 5.1 - $Id$ */
+ *  @version Release 8.2 - $Id$ */
 public class X_DD_OTR extends PO implements I_DD_OTR, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190302L;
+	private static final long serialVersionUID = 20220113L;
 
     /** Standard Constructor */
     public X_DD_OTR (Properties ctx, int DD_OTR_ID, String trxName)
@@ -41,7 +41,7 @@ public class X_DD_OTR extends PO implements I_DD_OTR, I_Persistent
       super (ctx, DD_OTR_ID, trxName);
       /** if (DD_OTR_ID == 0)
         {
-			setdd_otr_ID (0);
+			setDD_OTR_ID (0);
         } */
     }
 
@@ -68,7 +68,7 @@ public class X_DD_OTR extends PO implements I_DD_OTR, I_Persistent
 
     public String toString()
     {
-      StringBuffer sb = new StringBuffer ("X_DD_OTR[")
+      StringBuilder sb = new StringBuilder ("X_DD_OTR[")
         .append(get_ID()).append("]");
       return sb.toString();
     }
@@ -323,37 +323,37 @@ public class X_DD_OTR extends PO implements I_DD_OTR, I_Persistent
 	}
 
 	/** Set Order Transportation Requirement.
-		@param dd_otr_ID Order Transportation Requirement	  */
-	public void setdd_otr_ID (int dd_otr_ID)
+		@param DD_OTR_ID Order Transportation Requirement	  */
+	public void setDD_OTR_ID (int DD_OTR_ID)
 	{
-		if (dd_otr_ID < 1) 
-			set_ValueNoCheck (COLUMNNAME_dd_otr_ID, null);
+		if (DD_OTR_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_DD_OTR_ID, null);
 		else 
-			set_ValueNoCheck (COLUMNNAME_dd_otr_ID, Integer.valueOf(dd_otr_ID));
+			set_ValueNoCheck (COLUMNNAME_DD_OTR_ID, Integer.valueOf(DD_OTR_ID));
 	}
 
 	/** Get Order Transportation Requirement.
 		@return Order Transportation Requirement	  */
-	public int getdd_otr_ID () 
+	public int getDD_OTR_ID () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_dd_otr_ID);
+		Integer ii = (Integer)get_Value(COLUMNNAME_DD_OTR_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
 	}
 
 	/** Set dd_otr_uuid.
-		@param dd_otr_uuid dd_otr_uuid	  */
-	public void setdd_otr_uuid (String dd_otr_uuid)
+		@param DD_OTR_UUID dd_otr_uuid	  */
+	public void setDD_OTR_UUID (String DD_OTR_UUID)
 	{
-		set_Value (COLUMNNAME_dd_otr_uuid, dd_otr_uuid);
+		set_Value (COLUMNNAME_DD_OTR_UUID, DD_OTR_UUID);
 	}
 
 	/** Get dd_otr_uuid.
 		@return dd_otr_uuid	  */
-	public String getdd_otr_uuid () 
+	public String getDD_OTR_UUID () 
 	{
-		return (String)get_Value(COLUMNNAME_dd_otr_uuid);
+		return (String)get_Value(COLUMNNAME_DD_OTR_UUID);
 	}
 
 	public I_DD_TransportUnit getDD_TransportUnit() throws RuntimeException
@@ -438,6 +438,62 @@ public class X_DD_OTR extends PO implements I_DD_OTR, I_Persistent
 	public String getFU () 
 	{
 		return (String)get_Value(COLUMNNAME_FU);
+	}
+
+	public org.compiere.model.I_M_InOutLine getM_InOutLine() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_InOutLine)MTable.get(getCtx(), org.compiere.model.I_M_InOutLine.Table_Name)
+			.getPO(getM_InOutLine_ID(), get_TrxName());	}
+
+	/** Set Shipment/Receipt Line.
+		@param M_InOutLine_ID 
+		Line on Shipment or Receipt document
+	  */
+	public void setM_InOutLine_ID (int M_InOutLine_ID)
+	{
+		if (M_InOutLine_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_M_InOutLine_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_M_InOutLine_ID, Integer.valueOf(M_InOutLine_ID));
+	}
+
+	/** Get Shipment/Receipt Line.
+		@return Line on Shipment or Receipt document
+	  */
+	public int getM_InOutLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_M_InOutLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_M_MovementLine getM_MovementLine() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_MovementLine)MTable.get(getCtx(), org.compiere.model.I_M_MovementLine.Table_Name)
+			.getPO(getM_MovementLine_ID(), get_TrxName());	}
+
+	/** Set Move Line.
+		@param M_MovementLine_ID 
+		Inventory Move document Line
+	  */
+	public void setM_MovementLine_ID (int M_MovementLine_ID)
+	{
+		if (M_MovementLine_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_M_MovementLine_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_M_MovementLine_ID, Integer.valueOf(M_MovementLine_ID));
+	}
+
+	/** Get Move Line.
+		@return Inventory Move document Line
+	  */
+	public int getM_MovementLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_M_MovementLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	public org.compiere.model.I_M_Product getM_Product() throws RuntimeException
